@@ -75,8 +75,6 @@ lemma η_cancels_η_inv(V : FGModuleCat k) :
   ext f g
   dsimp [η, η_inv, η_inv_fun]
   let b := Basis.ofVectorSpace k (↑V)
-  have g_on_basis : ∑ i, g (b i) • b.coord i = g :=
-    Basis.sum_dual_apply_smul_coord b g
   calc
     g (∑ i, f (b.coord i) • b i)
       = ∑ i, g (f (b.coord i) • b i) := by simp
@@ -88,7 +86,7 @@ lemma η_cancels_η_inv(V : FGModuleCat k) :
     _ = ∑ i, f (g (b i) • b.coord i) := by simp only [LinearMap.map_smul]
     _ = f (∑ i, g (b i) • b.coord i) := by
       exact Eq.symm (map_sum f (fun x ↦ g (b x) • b.coord x) Finset.univ)
-    _ = f g := by rw [g_on_basis]
+    _ = f g := by rw [Basis.sum_dual_apply_smul_coord b g]
 
 
 -- The natural isomorphism between the identity functor and the double dual functor.
